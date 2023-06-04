@@ -27,7 +27,7 @@ body {
   background-color: black;
   padding: 1.5%;
 }
-.display {
+#display {
   height: 30vh;
   color: white;
   display: flex;
