@@ -1,0 +1,43 @@
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 3.5%;
+  margin-top: 1.5%;
+}
+.buttons > div {
+  background-color: grey;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#zero {
+  flex-basis: 50%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  width: 40vh;
+  height: 80vh;
+  background-color: black;
+  padding: 1.5%;
+}
+.display {
+  height: 30vh;
+  color: white;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.buttons {
+  height: 50vh;
+}
+#zero {
+  grid-column: span 2;
+  border-radius: 2.5rem;
+}
