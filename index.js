@@ -2,6 +2,7 @@ const numberButton = document.querySelectorAll(".numberButton");
 const actionButton = document.querySelectorAll(".actionButton");
 const operationButton = document.querySelectorAll(".operationButton");
 const display = document.getElementById("display");
+const equalButton = document.querySelector(".equalButton");
 
 function add(a, b) {
   console.log(a + b);
@@ -21,7 +22,7 @@ function divide(a, b) {
 
 let firstNumber = 0,
   secondNumber = 0,
-  operation = "/";
+  operateSign = "";
 
 function operate(firstNumber, secondNumber, operation) {
   switch (operation) {
@@ -49,12 +50,17 @@ numberButton.forEach((number) => {
 });
 operationButton.forEach((operation) => {
   operation.addEventListener("click", () => {
-    console.log("operation changed");
-    operation = operation.textContent;
+    operateSign = operation.textContent;
     console.log(operation);
-    console.log(typeof operation);
   });
 });
 function changeDisplay(number) {
   display.textContent = number;
 }
+
+equalButton.addEventListener("click", () => {
+  console.log(firstNumber);
+  console.log(secondNumber);
+  console.log(operateSign);
+  operate(firstNumber, secondNumber, operateSign);
+});
