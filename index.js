@@ -3,21 +3,22 @@ const actionButton = document.querySelectorAll(".actionButton");
 const operationButton = document.querySelectorAll(".operationButton");
 const display = document.getElementById("display");
 const equalButton = document.querySelector(".equalButton");
+let operated = false;
 
 function add(a, b) {
-  console.log(a + b);
+  changeDisplay(Number(a) + Number(b));
 }
 
 function subtract(a, b) {
-  console.log(a - b);
+  changeDisplay(Number(a) - Number(b));
 }
 
 function multiply(a, b) {
-  console.log(a * b);
+  changeDisplay(Number(a) * Number(b));
 }
 
 function divide(a, b) {
-  console.log(a / b);
+  changeDisplay(Number(a) / Number(b));
 }
 
 let firstNumber = 0,
@@ -44,23 +45,24 @@ function operate(firstNumber, secondNumber, operation) {
 numberButton.forEach((number) => {
   number.addEventListener("click", () => {
     changeDisplay(number.textContent);
-    if (firstNumber === 0) firstNumber = number.textContent;
-    else secondNumber = number.textContent;
+    if (firstNumber === 0 || operated === true) {
+      firstNumber = number.textContent;
+      operated = false;
+    } else secondNumber = number.textContent;
   });
 });
 operationButton.forEach((operation) => {
   operation.addEventListener("click", () => {
     operateSign = operation.textContent;
-    console.log(operation);
+    operated = false;
   });
 });
 function changeDisplay(number) {
   display.textContent = number;
+  firstNumber = number;
 }
 
 equalButton.addEventListener("click", () => {
-  console.log(firstNumber);
-  console.log(secondNumber);
-  console.log(operateSign);
   operate(firstNumber, secondNumber, operateSign);
+  operated = true;
 });
