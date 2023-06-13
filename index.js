@@ -76,7 +76,8 @@ function changeDisplay(number) {
 
   if (
     (display.textContent === "0" && number !== ".") ||
-    display.textContent === "NaN"
+    display.textContent === "NaN" ||
+    display.textContent === "Infinity" // still cant type after infinity
   ) {
     display.textContent = number;
   } else {
@@ -85,13 +86,7 @@ function changeDisplay(number) {
 }
 
 equalButton.addEventListener("click", () => {
-  if (secondNumber === 0 && (operateSign === "/" || operateSign === "*")) {
-    changeDisplay("NaN");
-    operated = true;
-    firstNumber = result;
-    secondNumber = 0;
-    operateSign = "";
-  } else if (operateSign !== "") {
+  if (operateSign !== "") {
     if (firstNumber === 0) {
       operate(result, secondNumber, operateSign);
     } else {
