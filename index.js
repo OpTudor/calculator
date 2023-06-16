@@ -5,7 +5,6 @@ const display = document.getElementById("display");
 const equalButton = document.querySelector(".equalButton");
 const signButton = document.querySelector(".signButton");
 const decimalButton = document.querySelector(".decimalButton");
-let operated = false;
 display.textContent = 0;
 
 function add(a, b) {
@@ -22,6 +21,10 @@ function multiply(a, b) {
 
 function divide(a, b) {
   return Number(a) / Number(b);
+}
+
+function percentage(a, b) {
+  return (Number(a) / 100) * Number(b);
 }
 
 let firstNumber = 0,
@@ -43,15 +46,20 @@ function operate(firstNumber, secondNumber, operation) {
     case "/":
       result = divide(firstNumber, secondNumber);
       break;
+    case "%":
+      result = percentage(firstNumber, secondNumber);
+      break;
   }
 }
 
 numberButton.forEach((number) => {
   number.addEventListener("click", () => {
-    changeDisplay(number.textContent);
     if (operateSign === "") {
+      changeDisplay(number.textContent);
       firstNumber = Number(display.textContent);
     } else {
+      if (secondNumber === 0) clearDisplay();
+      changeDisplay(number.textContent);
       secondNumber = Number(display.textContent);
     }
   });
@@ -60,9 +68,7 @@ numberButton.forEach((number) => {
 operationButton.forEach((operation) => {
   operation.addEventListener("click", () => {
     operateSign = operation.textContent;
-    operated = false;
     result = 0;
-    display.textContent = "";
   });
 });
 
@@ -92,9 +98,8 @@ equalButton.addEventListener("click", () => {
     } else {
       operate(firstNumber, secondNumber, operateSign);
     }
-    display.textContent = "";
+    clearDisplay();
     changeDisplay(result);
-    operated = true;
     firstNumber = result;
     secondNumber = 0;
     operateSign = "";
@@ -108,12 +113,21 @@ clearButton.addEventListener("click", () => {
   operateSign = "";
 });
 
+function clearDisplay() {
+  display.textContent = "";
+}
+
 signButton.addEventListener("click", () => {
-  if (display.textContent === firstNumber) {
+  if (operateSign === "" && display.textContent === String(firstNumber)) {
     firstNumber = 0 - firstNumber;
+    clearDisplay();
     changeDisplay(firstNumber);
-  } else {
+  } else if (
+    operateSign !== "" &&
+    display.textContent === String(secondNumber)
+  ) {
     secondNumber = 0 - secondNumber;
+    clearDisplay();
     changeDisplay(secondNumber);
   }
 });
@@ -121,11 +135,11 @@ signButton.addEventListener("click", () => {
 decimalButton.addEventListener("click", () => {
   if (operateSign === "" && !String(firstNumber).includes(".")) {
     firstNumber = String(firstNumber) + ".";
-    display.textContent = "";
+    clearDisplay();
     changeDisplay(firstNumber);
   } else if (operateSign !== "" && !String(secondNumber).includes(".")) {
     secondNumber = String(secondNumber) + ".";
-    display.textContent = "";
+    clearDisplay();
     changeDisplay(secondNumber);
   }
 });

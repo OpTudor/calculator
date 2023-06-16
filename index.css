@@ -4,12 +4,16 @@
   grid-gap: 3.5%;
   margin-top: 1.5%;
 }
-.buttons > div {
-  background-color: grey;
-  border-radius: 100%;
+.buttons > button {
+  background-color: #333333;
+  color: #ffffff;
+  font-size: 20px;
+  border-radius: 50px;
+  border-style: solid;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
 }
 #zero {
   flex-basis: 50%;
@@ -24,12 +28,14 @@ body {
 .container {
   width: 40vh;
   height: 80vh;
-  background-color: black;
+  background-color: #000000;
   padding: 1.5%;
+  border-radius: 20px;
 }
 #display {
   height: 30vh;
-  color: white;
+  color: #ffffff;
+  font-size: 30px;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
@@ -40,4 +46,10 @@ body {
 #zero {
   grid-column: span 2;
   border-radius: 2.5rem;
+}
+
+#numberZero {
+  grid-column: 1 / span 2;
+  justify-content: flex-start;
+  padding-left: 33px;
 }
