@@ -7,54 +7,47 @@ const signButton = document.querySelector(".signButton");
 const decimalButton = document.querySelector(".decimalButton");
 display.textContent = 0;
 
-function add(a, b) {
-  return Number(a) + Number(b);
-}
-
-function subtract(a, b) {
-  return Number(a) - Number(b);
-}
-
-function multiply(a, b) {
-  return Number(a) * Number(b);
-}
-
-function divide(a, b) {
-  return Number(a) / Number(b);
-}
-
-function percentage(a, b) {
-  return (Number(a) / 100) * Number(b);
-}
-
-function addingPercentage(a, b) {
-  return Number(a) + (Number(b) / 100) * Number(a);
-}
 let firstNumber = "",
   secondNumber = "",
   result = 0,
   operateSign = "",
-  addPercentage = false;
+  percentage = false;
 
-function operate(firstNumber, secondNumber, operation) {
+function operate(a, b, operation) {
   switch (operation) {
     case "+":
-      result = add(firstNumber, secondNumber);
+      result = Number(a) + Number(b);
       break;
     case "-":
-      result = subtract(firstNumber, secondNumber);
+      result = Number(a) - Number(b);
       break;
     case "*":
-      result = multiply(firstNumber, secondNumber);
+      result = Number(a) * Number(b);
       break;
     case "/":
-      result = divide(firstNumber, secondNumber);
+      result = Number(a) / Number(b);
       break;
     case "%":
-      result = percentage(firstNumber, secondNumber);
+      result = (Number(a) / 100) * Number(b);
       break;
-    case "addPercentage":
-      result = addingPercentage(firstNumber, secondNumber);
+  }
+}
+function operatePercentage(a, b, operation) {
+  switch (operation) {
+    case "+":
+      result = Number(a) + (Number(b) / 100) * Number(a);
+      break;
+    case "-":
+      result = Number(a) - (Number(b) / 100) * Number(a);
+      break;
+    case "*":
+      result = Number(a) * ((Number(b) / 100) * Number(a));
+      break;
+    case "/":
+      result = Number(a) / ((Number(b) / 100) * Number(a));
+      break;
+    case "%":
+    //add error
   }
 }
 
@@ -77,7 +70,7 @@ operationButton.forEach((operation) => {
       operateSign = operation.textContent;
       result = 0;
     } else if (operation.textContent === "%") {
-      addPercentage = !addPercentage;
+      percentage = !percentage;
     }
   });
 });
@@ -85,15 +78,15 @@ operationButton.forEach((operation) => {
 function changeDisplay(number) {
   if (
     (number === "." && display.textContent.includes(".")) ||
-    display.textContent.length > 7
+    (display.textContent.length > 7 && display.textContent !== "Infinity")
   ) {
     return;
   }
 
   if (
     (display.textContent === "0" && number !== ".") ||
-    display.textContent === "NaN" ||
-    display.textContent === "Infinity" // still cant type after infinity
+    isNaN(display.textContent) ||
+    !isFinite(display.textContent)
   ) {
     display.textContent = number;
   } else {
@@ -104,12 +97,12 @@ function changeDisplay(number) {
 equalButton.addEventListener("click", () => {
   if (operateSign !== "") {
     if (firstNumber === 0) {
-      if (addPercentage) {
-        operate(result, secondNumber, "addPercentage");
+      if (percentage) {
+        operatePercentage(result, secondNumber, operateSign);
       } else operate(result, secondNumber, operateSign);
     } else {
-      if (addPercentage) {
-        operate(firstNumber, secondNumber, "addPercentage");
+      if (percentage) {
+        operatePercentage(firstNumber, secondNumber, operateSign);
       } else operate(firstNumber, secondNumber, operateSign);
     }
     clearDisplay();
