@@ -27,10 +27,14 @@ function percentage(a, b) {
   return (Number(a) / 100) * Number(b);
 }
 
-let firstNumber = 0,
-  secondNumber = 0,
+function addingPercentage(a, b) {
+  return Number(a) + (Number(b) / 100) * Number(a);
+}
+let firstNumber = "",
+  secondNumber = "",
   result = 0,
-  operateSign = "";
+  operateSign = "",
+  addPercentage = false;
 
 function operate(firstNumber, secondNumber, operation) {
   switch (operation) {
@@ -49,6 +53,8 @@ function operate(firstNumber, secondNumber, operation) {
     case "%":
       result = percentage(firstNumber, secondNumber);
       break;
+    case "addPercentage":
+      result = addingPercentage(firstNumber, secondNumber);
   }
 }
 
@@ -58,7 +64,7 @@ numberButton.forEach((number) => {
       changeDisplay(number.textContent);
       firstNumber = Number(display.textContent);
     } else {
-      if (secondNumber === 0) clearDisplay();
+      if (secondNumber === "") clearDisplay();
       changeDisplay(number.textContent);
       secondNumber = Number(display.textContent);
     }
@@ -67,8 +73,12 @@ numberButton.forEach((number) => {
 
 operationButton.forEach((operation) => {
   operation.addEventListener("click", () => {
-    operateSign = operation.textContent;
-    result = 0;
+    if (secondNumber === "") {
+      operateSign = operation.textContent;
+      result = 0;
+    } else if (operation.textContent === "%") {
+      addPercentage = !addPercentage;
+    }
   });
 });
 
@@ -94,22 +104,26 @@ function changeDisplay(number) {
 equalButton.addEventListener("click", () => {
   if (operateSign !== "") {
     if (firstNumber === 0) {
-      operate(result, secondNumber, operateSign);
+      if (addPercentage) {
+        operate(result, secondNumber, "addPercentage");
+      } else operate(result, secondNumber, operateSign);
     } else {
-      operate(firstNumber, secondNumber, operateSign);
+      if (addPercentage) {
+        operate(firstNumber, secondNumber, "addPercentage");
+      } else operate(firstNumber, secondNumber, operateSign);
     }
     clearDisplay();
     changeDisplay(result);
     firstNumber = result;
-    secondNumber = 0;
+    secondNumber = "";
     operateSign = "";
   }
 });
 
 clearButton.addEventListener("click", () => {
   display.textContent = 0;
-  firstNumber = 0;
-  secondNumber = 0;
+  firstNumber = "";
+  secondNumber = "";
   operateSign = "";
 });
 
