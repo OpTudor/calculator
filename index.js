@@ -31,6 +31,10 @@ function operate(a, b, operation) {
       result = (Number(a) / 100) * Number(b);
       break;
   }
+  let decimals = result % 1;
+  if (decimals !== 0) {
+    result = result.toFixed(2);
+  } else result = Math.floor(result);
 }
 function operatePercentage(a, b, operation) {
   switch (operation) {
@@ -41,15 +45,19 @@ function operatePercentage(a, b, operation) {
       result = Number(a) - (Number(b) / 100) * Number(a);
       break;
     case "x":
-      result = Number(a) * ((Number(b) / 100) * Number(a));
+      result = Number(a) * (Number(b) / 100);
       break;
     case "÷":
-      result = Number(a) / ((Number(b) / 100) * Number(a));
+      result = Number(a) / (Number(b) / 100);
       break;
     case "%":
       display.textContent = "Error";
       break;
   }
+  let decimals = result % 1;
+  if (decimals !== 0) {
+    result = result.toFixed(2);
+  } else result = Math.floor(result);
 }
 
 numberButton.forEach((number) => {
