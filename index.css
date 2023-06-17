@@ -1,15 +1,16 @@
 .buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 3.5%;
+  grid-gap: 8px;
   margin-top: 1.5%;
 }
-.buttons > button {
+button {
   background-color: #333333;
   color: #ffffff;
-  font-size: 20px;
+  font-size: 30px;
   border-radius: 50px;
   border-style: solid;
+  border-color: #000000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,13 +30,13 @@ body {
   width: 40vh;
   height: 80vh;
   background-color: #000000;
-  padding: 1.5%;
+  padding: 10px;
   border-radius: 20px;
 }
 #display {
   height: 30vh;
   color: #ffffff;
-  font-size: 30px;
+  font-size: 80px;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
@@ -52,4 +53,13 @@ body {
   grid-column: 1 / span 2;
   justify-content: flex-start;
   padding-left: 33px;
+}
+
+.orange {
+  background-color: #fe9505;
+}
+
+.grey {
+  background-color: #a5a5a5;
+  color: #000000;
 }

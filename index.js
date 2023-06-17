@@ -9,7 +9,7 @@ display.textContent = 0;
 
 let firstNumber = "",
   secondNumber = "",
-  result = 0,
+  result = "",
   operateSign = "",
   percentage = false;
 
@@ -21,10 +21,10 @@ function operate(a, b, operation) {
     case "-":
       result = Number(a) - Number(b);
       break;
-    case "*":
+    case "x":
       result = Number(a) * Number(b);
       break;
-    case "/":
+    case "÷":
       result = Number(a) / Number(b);
       break;
     case "%":
@@ -40,14 +40,15 @@ function operatePercentage(a, b, operation) {
     case "-":
       result = Number(a) - (Number(b) / 100) * Number(a);
       break;
-    case "*":
+    case "x":
       result = Number(a) * ((Number(b) / 100) * Number(a));
       break;
-    case "/":
+    case "÷":
       result = Number(a) / ((Number(b) / 100) * Number(a));
       break;
     case "%":
-    //add error
+      display.textContent = "Error";
+      break;
   }
 }
 
@@ -68,7 +69,7 @@ operationButton.forEach((operation) => {
   operation.addEventListener("click", () => {
     if (secondNumber === "") {
       operateSign = operation.textContent;
-      result = 0;
+      result = "";
     } else if (operation.textContent === "%") {
       percentage = !percentage;
     }
@@ -105,11 +106,14 @@ equalButton.addEventListener("click", () => {
         operatePercentage(firstNumber, secondNumber, operateSign);
       } else operate(firstNumber, secondNumber, operateSign);
     }
-    clearDisplay();
-    changeDisplay(result);
+    if (display.textContent !== "Error") {
+      clearDisplay();
+      changeDisplay(result);
+    }
     firstNumber = result;
     secondNumber = "";
     operateSign = "";
+    percentage = false;
   }
 });
 
